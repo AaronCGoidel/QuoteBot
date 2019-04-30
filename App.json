@@ -1,0 +1,13 @@
+{
+  "name": "QuoteBot",
+  "description": "An app that will slack message a user with a random quote.",
+  "author": "Aaron Goidel",
+  "repository": "https://github.com/AaronCGoidel/QuoteBot",
+  "env": {
+    "SLACK_API_TOKEN": {
+      "description": "Your Slack API Token",
+      "value": "1234-12314123123-123123123",
+      "required": "true"
+    }
+  }
+}
