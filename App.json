@@ -9,11 +9,6 @@
       "value": "1234-12314123123-123123123",
       "required": "true"
     },
-    "TIME_DELAY": {
-      "description": "Time between messages (seconds)",
-      "value": "3600",
-      "required": "true"
-    },
     "TARGET_ID": {
       "description": "User id of target accound",
       "value": "XXXXXXXX",

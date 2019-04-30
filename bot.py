@@ -57,9 +57,8 @@ def on_open(ws):
   start = time.time()
   sendGreeting()
   while True:
-    delay = os.environ["TIME_DELAY"]
     sendMessage()
-    time.sleep(delay)
+    time.sleep(10)
 
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
