@@ -57,9 +57,9 @@ def on_open(ws):
   logging.info("\033[32m"+"Connection Opened"+"\033[0m" + ", messages will be sent every hour")
   start = time.time()
   sendGreeting()
-  while True:
-    sendMessage()
-    time.sleep(10)
+  # while True:
+    # sendMessage()
+    # time.sleep(10)
 
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
