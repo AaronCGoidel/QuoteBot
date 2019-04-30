@@ -9,10 +9,7 @@ import time
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
-try:
-  TOKEN = os.environ["SLACK_API_TOKEN"]
-except:
-  TOKEN = 'TOKEN NOT FOUND'
+TOKEN = os.environ["SLACK_API_TOKEN"]
 
 def getName(id):
   logging.debug('requesting name of id: ' + id)
@@ -37,15 +34,32 @@ def sendMessage():
   return True
 
 def sendGreeting():
+  user_id = os.environ["TARGET_ID"]
+  x = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+user_id)
+  x = x.json()
+  CHANNEL = x["channel"]["id"]
+  logging.info(x)
   logging.info("Greeting Sent")
+
+  message_data = {
+    'token': TOKEN,
+    'channel': CHANNEL,
+    'parse': 'full',
+    'text': "HELLO THIS IS A TEST!",
+    'as_user': 'true'
+
+  }
+  xx = requests.post("https://slack.com/api/chat.postMessage", data=message_data)
   return True
 
 def on_open(ws):
   logging.info("\033[32m"+"Connection Opened"+"\033[0m" + ", messages will be sent every hour")
   start = time.time()
+  sendGreeting()
   while True:
+    delay = os.environ["TIME_DELAY"]
     sendMessage()
-    time.sleep(60 - ((time.time() - start) % 60))
+    time.sleep(delay)
 
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
