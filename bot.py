@@ -33,8 +33,7 @@ def start_rtm():
   return req['url']
 
 def sendMessage():
-  logging.info("\033[32m"+"Message Sent"+"\033[0m" 
-      + ":", "\"test\"")
+  logging.info("Sent Message!")
   return True
 
 def sendGreeting():
@@ -50,6 +49,8 @@ def on_open(ws):
 
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
+
+def on_message
 
 if __name__ == "__main__":
   r = start_rtm()
