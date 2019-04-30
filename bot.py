@@ -50,8 +50,6 @@ def on_open(ws):
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
 
-def on_message
-
 if __name__ == "__main__":
   r = start_rtm()
   ws = websocket.WebSocketApp(r, on_open = on_open, on_close = on_close)
