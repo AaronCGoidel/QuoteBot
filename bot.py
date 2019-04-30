@@ -38,8 +38,7 @@ def sendGreeting():
   user_info = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+user_id).json()
   CHANNEL = user_info["channel"]["id"]
 
-  message = "Hello," + getName(user_id) + ". Thank you for subscribing to CAT FACTS!" 
-    + "You will receive one random interesting feline fact every hour."
+  message = "Hello," + getName(user_id) + ". Thank you for subscribing to CAT FACTS!" + "You will receive one random interesting feline fact every hour."
 
   message_data = {
     'token': TOKEN,
