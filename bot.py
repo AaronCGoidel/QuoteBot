@@ -35,21 +35,22 @@ def sendMessage():
 
 def sendGreeting():
   user_id = os.environ["TARGET_ID"]
-  x = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+user_id)
-  x = x.json()
-  CHANNEL = x["channel"]["id"]
-  logging.info(x)
-  logging.info("Greeting Sent")
+  user_info = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+user_id).json()
+  CHANNEL = user_info["channel"]["id"]
+
+  message = "Hello," + getName(user_id) + ". Thank you for subscribing to CAT FACTS!" 
+    + "You will receive one random interesting feline fact every hour."
 
   message_data = {
     'token': TOKEN,
     'channel': CHANNEL,
     'parse': 'full',
-    'text': "HELLO THIS IS A TEST!",
+    'text': message,
     'as_user': 'true'
 
   }
-  xx = requests.post("https://slack.com/api/chat.postMessage", data=message_data)
+  post = requests.post("https://slack.com/api/chat.postMessage", data=message_data)
+  logging.info("Greeting Sent")
   return True
 
 def on_open(ws):
