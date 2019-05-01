@@ -32,8 +32,7 @@ def start_rtm():
 
   return req['url']
 
-def sendMessage(fact):
-  user_id = os.environ["TARGET_ID"]
+def sendMessage(fact, user_id):
   user_info = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+user_id).json()
   CHANNEL = user_info["channel"]["id"]
 
@@ -49,8 +48,7 @@ def sendMessage(fact):
   logging.info("Sent Message")
   return True
 
-def sendGreeting():
-  user_id = os.environ["TARGET_ID"]
+def sendGreeting(user_id):
   user_info = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+user_id).json()
   CHANNEL = user_info["channel"]["id"]
   greeting = "Hello, " + getName(user_id) + ". "
@@ -72,13 +70,15 @@ def sendGreeting():
 def on_open(ws):
   logging.info("\033[32m"+"Connection Opened"+"\033[0m" + ", messages will be sent.")
   start = time.time()
-
+  ids = os.environ["TARGET_ID"].split(',')
   # send greeting, if configured
   if SEND_GREETING == "true":
-      sendGreeting()
+    for user_id in ids:
+      sendGreeting(user_id)
 
   while True:
-      sendMessage("CAT FACT: " + get_quote())
+    for user_id in ids:
+      sendMessage("CAT FACT: " + get_quote(), user_id)
       time.sleep(3600) # sleep for an hour
 
 def on_close(ws):
