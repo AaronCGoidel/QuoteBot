@@ -10,10 +10,10 @@ import random
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
-try:
-  TOKEN = os.environ["SLACK_API_TOKEN"]
-  QUOTE_URL = os.environ["QUOTE_FETCH_URL"]
-  SEND_GREETING = os.environ["SEND_GREETING"]
+
+TOKEN = os.environ["SLACK_API_TOKEN"]
+QUOTE_URL = os.environ["QUOTE_FETCH_URL"]
+SEND_GREETING = os.environ["SEND_GREETING"]
 
 def getName(id):
   logging.debug('requesting name of id: ' + id)
