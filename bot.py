@@ -73,12 +73,12 @@ def on_open(ws):
   
   filepath = "quotes.txt"
   with open(filepath) as f:
-    line = f.readLine()
+    line = f.readline()
     count = 1
     while line:
       sendMessage(line)
       time.sleep(60) # sleep for 1 minute
-      line = f.readLine()
+      line = f.readline()
       count += 1
 
 
