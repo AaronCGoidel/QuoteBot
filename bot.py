@@ -81,7 +81,7 @@ def on_open(ws):
   while True:
     for user_id in ids:
       sendMessage("CAT FACT: " + get_quote(), user_id)
-      time.sleep(3600) # sleep for an hour
+    time.sleep(3600) # sleep for an hour
 
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
