@@ -6,10 +6,13 @@ import sys
 import logging
 import time
 import datetime as dt
+import random
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 TOKEN = os.environ["SLACK_API_TOKEN"]
+QUOTE_URL = os.environ["QUOTE_FETCH_URL"]
+SEND_GREETING = os.environ["SEND_GREETING"]
 
 def getName(id):
   logging.debug('requesting name of id: ' + id)
@@ -69,21 +72,28 @@ def sendGreeting():
 def on_open(ws):
   logging.info("\033[32m"+"Connection Opened"+"\033[0m" + ", messages will be sent.")
   start = time.time()
-  sendGreeting()
-  
-  filepath = "quotes.txt"
-  with open(filepath) as f:
-    line = f.readline()
-    count = 1
-    while line:
-      sendMessage(line)
-      time.sleep(3600) # sleep for 1 hour
-      line = f.readline()
-      count += 1
 
+  # send greeting, if configured
+  if SEND_GREETING == "true":
+      sendGreeting()
+
+  while True:
+      sendMessage("CAT FACT: " + get_quote())
+      time.sleep(3600) # sleep for an hour
 
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
+
+def get_quote():
+    quote_doc = requests.get(QUOTE_URL).content.split("\n")
+    quotes = []
+    for line in quote_doc:
+        line = line.strip()
+        if line.startswith("#") or len(line) == 0:
+            # Skip any commented/empty lines
+            continue
+        quotes.append(line)
+    return random.choice(quotes)
 
 if __name__ == "__main__":
   r = start_rtm()
