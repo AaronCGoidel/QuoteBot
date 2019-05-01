@@ -1,11 +1,11 @@
 import websocket
 import json
 import requests
-import urllib
 import os
 import sys
 import logging
 import time
+import datetime as dt
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
@@ -29,8 +29,21 @@ def start_rtm():
 
   return req['url']
 
-def sendMessage():
-  logging.info("Sent Message!")
+def sendMessage(fact):
+  user_id = os.environ["TARGET_ID"]
+  user_info = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+user_id).json()
+  CHANNEL = user_info["channel"]["id"]
+
+  message_data = {
+    'token': TOKEN,
+    'channel': CHANNEL,
+    'parse': 'full',
+    'text': fact,
+    'as_user': 'true'
+
+  }
+  post = requests.post("https://slack.com/api/chat.postMessage", data=message_data)
+  logging.info("Sent Message")
   return True
 
 def sendGreeting():
@@ -54,12 +67,20 @@ def sendGreeting():
   return True
 
 def on_open(ws):
-  logging.info("\033[32m"+"Connection Opened"+"\033[0m" + ", messages will be sent every hour")
+  logging.info("\033[32m"+"Connection Opened"+"\033[0m" + ", messages will be sent.")
   start = time.time()
   sendGreeting()
-  # while True:
-    # sendMessage()
-    # time.sleep(10)
+  
+  filepath = "quotes.txt"
+  with open(filepath) as file:
+    line = file.readLine()
+    count = 1
+    while line:
+      
+      time.sleep(60) # sleep for 1 minute
+      line = file.readLine()
+      count += 1
+
 
 def on_close(ws):
   logging.info("\033[91m"+"Connection Closed"+"\033[0m")
