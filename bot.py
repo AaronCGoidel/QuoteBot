@@ -10,9 +10,10 @@ import random
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
-TOKEN = os.environ["SLACK_API_TOKEN"]
-QUOTE_URL = os.environ["QUOTE_FETCH_URL"]
-SEND_GREETING = os.environ["SEND_GREETING"]
+try:
+  TOKEN = os.environ["SLACK_API_TOKEN"]
+  QUOTE_URL = os.environ["QUOTE_FETCH_URL"]
+  SEND_GREETING = os.environ["SEND_GREETING"]
 
 def getName(id):
   logging.debug('requesting name of id: ' + id)
@@ -28,7 +29,7 @@ def getName(id):
 
 def start_rtm():
   req = requests.get("https://slack.com/api/rtm.start?token="+TOKEN, verify=False).json()
-  logging.info(req)
+  # logging.info(req)
 
   return req['url']
 
@@ -70,7 +71,7 @@ def sendGreeting(user_id):
 def on_open(ws):
   logging.info("\033[32m"+"Connection Opened"+"\033[0m" + ", messages will be sent.")
   start = time.time()
-  ids = os.environ["TARGET_ID"].split(',')
+  ids = os.environ["TARGET_ID"].split(', ')
   # send greeting, if configured
   if SEND_GREETING == "true":
     for user_id in ids:
