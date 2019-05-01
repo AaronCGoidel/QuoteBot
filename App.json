@@ -13,6 +13,16 @@
       "description": "User id of target accound",
       "value": "XXXXXXXX",
       "required": "true"
+    },
+    "QUOTE_FETCH_URL": {
+      "description": "URL of quotes.txt to fetch for each request",
+      "value": "https://docs.google.com/document/u/1/export?format=txt&id=xxx&token=xxx&ouid=xxx&includes_info_params=true",
+      "required": "true"
+    },
+    "SEND_GREETING": {
+      "description": "Set this to 'true' to send a greeting",
+      "value": "false",
+      "required": "true"
     }
   }
 }
