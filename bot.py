@@ -72,13 +72,13 @@ def on_open(ws):
   sendGreeting()
   
   filepath = "quotes.txt"
-  with open(filepath) as file:
-    line = file.readLine()
+  with open(filepath) as f:
+    line = f.readLine()
     count = 1
     while line:
-      
+      sendMessage(line)
       time.sleep(60) # sleep for 1 minute
-      line = file.readLine()
+      line = f.readLine()
       count += 1
 
 
