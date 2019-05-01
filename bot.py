@@ -77,7 +77,7 @@ def on_open(ws):
     count = 1
     while line:
       sendMessage(line)
-      time.sleep(60) # sleep for 1 minute
+      time.sleep(17280) # sleep for 4.8 hours
       line = f.readline()
       count += 1
 
