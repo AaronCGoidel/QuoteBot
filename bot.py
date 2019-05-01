@@ -74,6 +74,7 @@ def on_open(ws):
   # send greeting, if configured
   if SEND_GREETING == "true":
     for user_id in ids:
+      print user_id
       sendGreeting(user_id)
 
   while True:
